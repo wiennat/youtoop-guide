@@ -21,13 +21,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
           body: form
         })
         .then(res => {
-          return res.json()
+          if (res.status >= 200 && res.status < 300) {
+            return res.json();
+          } else {
+            res.text().then((body) => {
+              throw new Error(`${res.statusText}: ${body}`);
+            }).catch(ex => {
+              const keywordSpan = document.getElementById("keywordSpan");
+              keywordSpan.innerText = `ไม่สามารถค้นข้อมูลได้เนื่องจากปัญหาด้านล่าง`;
+              showError(ex);
+            });
+          }
         })
         .then(json => {
-          const keywordSpan = document.getElementById("keywordSpan");
-          keywordSpan.innerText = `ค้นคำว่า ${keyword} เจอทั้งหมด ${json.length} เรื่อง`;
-          showResultTable(json);
+          if (json) {
+            const keywordSpan = document.getElementById("keywordSpan");
+            keywordSpan.innerText = `ค้นคำว่า ${keyword} เจอทั้งหมด ${json.length} เรื่อง`;
+            showResultTable(json);
+          }
         })
+        .catch(ex => {
+          const keywordSpan = document.getElementById("keywordSpan");
+          keywordSpan.innerText = `ไม่สามารถค้นข้อมูลได้เนื่องจากปัญหาด้านล่าง`;
+          showError(ex);
+        })
+
     }
   });
 });
@@ -61,4 +79,12 @@ function showResultTable(json) {
     <tbody>${tableRows.join("")}</tbody>
     </table>`;
   resultPanel.innerHTML = generatedString;
+}
+
+function showError(ex) {
+  const resultPanel = document.getElementById('resultPanel');
+  const errorBox = `<div class="red lighten-4">
+    ${ex}
+  </div>`;
+  resultPanel.innerHTML = errorBox;
 }

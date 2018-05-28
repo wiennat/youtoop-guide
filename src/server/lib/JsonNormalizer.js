@@ -6,10 +6,14 @@ class JsonNormalizer {
   }
 
   load() {
-    const data = fs.readFileSync(this.filePath, {
-      encoding: 'utf8'
-    });
-    return JSON.parse(data);
+    try {
+      const data = fs.readFileSync(this.filePath, {
+        encoding: 'utf8'
+      });
+      return JSON.parse(data);
+    } catch (er) {
+      throw new Error("Cannot load filter file");
+    }
   }
 
   normalize(word) {
@@ -26,7 +30,7 @@ class JsonNormalizer {
     if (normalizedWords.length > 0) {
       return normalizedWords;
     }
-    return [ filteredWord ];
+    return [filteredWord];
   }
 }
 

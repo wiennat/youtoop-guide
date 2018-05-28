@@ -52,6 +52,14 @@ app.post('/api/search', (req, res) => {
   return res.send(stories);
 });
 
+
+// error handler
+app.use(function (err, req, res, next) {
+  logger.error(chalk.red(`${err.message}
+  ${err.stack}`));
+  res.status(err.status || 500).send(err.message);
+});
+
 app.listen(PORT, () => {
   logger.debug(chalk.green(`Server listening on http://localhost:${PORT}/ ..`))
 });
