@@ -10,8 +10,8 @@
     "dev:server": "webpack --watch --config webpack.server.js",
     "copy:bin": "cp -rf ./bin ./dist",
     "build": "mkdir -p ./dist && npm run build:client && npm run build:server && npm run copy:bin",
-    "build:client": "webpack --config webpack.client.js",
-    "build:server": "webpack --config webpack.server.js",
+    "build:client": "webpack --mode production --config webpack.client.js",
+    "build:server": "webpack --mode production --config webpack.server.js",
     "clean": "rimraf dist",
     "fetch:data": "node bin/fetch.js data ./dist/data/data.json",
     "fetch:filter": "node bin/fetch.js filter ./dist/data/filter.json"
