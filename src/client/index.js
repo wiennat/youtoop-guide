@@ -59,7 +59,7 @@ function showResultTable(json) {
     <th>ช่วง</th>
     <th>คนเล่า</th>
     <th>รายละเอียด</th>
-    <th class="center">ฟัง (ผู้ใช้มือถือต้อง)</th>
+    <th class="center">ฟัง (ผู้ใช้มือถือก็ใช้เลื่อนเวลาเอานะ)</th>
   </tr>`;
   const tableRows = json.map((story, idx) => `<tr>
       <td>${idx + 1}</td>
