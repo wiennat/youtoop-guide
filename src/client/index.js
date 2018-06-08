@@ -59,7 +59,7 @@ function showResultTable(json) {
     <th>ช่วง</th>
     <th>คนเล่า</th>
     <th>รายละเอียด</th>
-    <th>ฟัง</th>
+    <th class="center">ฟัง (ผู้ใช้มือถือต้อง)</th>
   </tr>`;
   const tableRows = json.map((story, idx) => `<tr>
       <td>${idx + 1}</td>
@@ -67,10 +67,11 @@ function showResultTable(json) {
       <td>${story.part}</td>
       <td>${story.narrator}</td>
       <td>${story.description}</td>
-      <td>
+      <td class="center">
         <a href="https://soundcloud.com/gettalks/youtoop-${story.ep}#t=${story.epTime}" target="_blank">
           <img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">
         </a>
+        <div id="time-${idx}">${story.epTime}</div>
       </td>
     </tr>`);
 
