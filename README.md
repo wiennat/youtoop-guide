@@ -24,7 +24,7 @@ npm run fetch:data -- {sheetId} {key}
 ```
 และ
 ```bash
-npm run fetch:data -- {sheetId} {key}
+npm run fetch:filter -- {sheetId} {key}
 ```
 โดยที่ `{sheetId}` คือไอดีของ Sheet และ `{key}` คือ API Key ที่ได้จากข้อ 1.
 
