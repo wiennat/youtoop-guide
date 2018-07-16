@@ -1,6 +1,7 @@
 import "materialize-css/dist/css/materialize.css";
 import "materialize-css/dist/js/materialize.js";
 import "./main.css";
+import classnames from "classnames";
 import fetch from "isomorphic-fetch";
 import soundcloudLogo from "./img/soundclound.png";
 
@@ -61,25 +62,38 @@ function showResultTable(json) {
     <th>รายละเอียด</th>
     <th class="center">ฟัง (ผู้ใช้มือถือก็ใช้เลื่อนเวลาเอานะ)</th>
   </tr>`;
-  const tableRows = json.map((story, idx) => `<tr>
+
+  const tableRows = json.map(generateRow);
+  const generatedString = `<table>
+    <thead>${tableHeader}</thead>
+    <tbody>${tableRows.join("")}</tbody>
+    </table>`;
+  resultPanel.innerHTML = generatedString;
+}
+
+function generateRow(story, idx) {
+  const descriptionClassnames = generateDescriptionClassname(story);
+  return `<tr>
       <td>${idx + 1}</td>
       <td>${story.name}</td>
       <td>${story.part}</td>
       <td>${story.narrator}</td>
-      <td>${story.description}</td>
+      <td class="${descriptionClassnames}">${story.description}</td>
       <td class="center">
         <a href="https://soundcloud.com/gettalks/youtoop-${story.ep}#t=${story.epTime}" target="_blank">
           <img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">
         </a>
         <div id="time-${idx}">${story.epTime}</div>
       </td>
-    </tr>`);
+    </tr>`;
+}
 
-  const generatedString = `<table>
-    <thead>${tableHeader}</thead>
-    <tbody>${tableRows.join("")}</tbody>
-    </table>`;
-  resultPanel.innerHTML = generatedString;
+function generateDescriptionClassname(story) {
+  return classnames({
+    recommended: story.description.includes('เรื่องนี้ดี') ||
+      story.description.includes('เรื่องนี้พีค') ||
+      story.description.includes('เรื่องนี้พีก')
+  });
 }
 
 function showError(ex) {
