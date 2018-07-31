@@ -9,8 +9,9 @@ import JsonNormalize from './lib/JsonNormalizer';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const storyDatasource = new JsonDataSource(path.join(__dirname, './data/data.json'));
-const filterDatasource = new JsonNormalize(path.join(__dirname, './data/filter.json'));
+const dataPath = process.env.DATA_PATH || path.join(__dirname, './data');
+const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
+const filterDatasource = new JsonNormalize(path.join(dataPath, 'filter.json'));
 
 app.set('views', path.join(__dirname, './pages'));
 app.set('view engine', 'ejs');

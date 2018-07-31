@@ -1,9 +1,10 @@
 import winston from 'winston';
 
+const logPath = process.env.LOG_PATH || "/app.log";
 const options = {
   file: {
     level: 'info',
-    filename: `app.log`,
+    filename: logPath,
     handleExceptions: true,
     json: false,
     maxsize: 10485760, // 10MB
