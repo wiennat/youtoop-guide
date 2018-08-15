@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-const logPath = process.env.LOG_PATH || "/app.log";
+const logPath = process.env.LOG_PATH || "app.log";
 const options = {
   file: {
     level: 'info',
