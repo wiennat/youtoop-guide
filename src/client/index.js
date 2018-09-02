@@ -4,6 +4,7 @@ import "./main.css";
 import classnames from "classnames";
 import fetch from "isomorphic-fetch";
 import soundcloudLogo from "./img/soundclound.png";
+import youtubeLogo from "./img/youtube.png";
 
 const KEY_ENTER = 13;
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -80,7 +81,7 @@ function generateRow(story, idx) {
       <td>${story.narrator}</td>
       <td class="${descriptionClassnames}">${story.description}</td>
       <td class="center">
-        <a href="https://soundcloud.com/gettalks/youtoop-${story.ep}#t=${story.epTime}" target="_blank">
+        <a href="${story.url}" target="_blank">
           <img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">
         </a>
         <div id="time-${idx}">${story.epTime}</div>
@@ -94,6 +95,14 @@ function generateDescriptionClassname(story) {
       story.description.includes('เรื่องนี้พีค') ||
       story.description.includes('เรื่องนี้พีก')
   });
+}
+
+function generatePlayerButton(story) {
+  if (story.url.includes('youtube.com/')){
+    return `<img id="image" src="/assets/${youtubeLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
+  } else {
+    return `<img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
+  }
 }
 
 function showError(ex) {

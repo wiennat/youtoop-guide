@@ -50,6 +50,7 @@ function sheetToDataJson(sheet) {
       part: row[1],
       narrator: row[2],
       description: row[3],
+      url: row[4],
       ep: row[5],
       epTime: row[6],
       keyword1: row[8],
