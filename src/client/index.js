@@ -74,6 +74,7 @@ function showResultTable(json) {
 
 function generateRow(story, idx) {
   const descriptionClassnames = generateDescriptionClassname(story);
+  const playerButton = generatePlayerButton(story);
   return `<tr>
       <td>${idx + 1}</td>
       <td>${story.name}</td>
@@ -82,7 +83,7 @@ function generateRow(story, idx) {
       <td class="${descriptionClassnames}">${story.description}</td>
       <td class="center">
         <a href="${story.url}" target="_blank">
-          <img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">
+          ${playerButton}
         </a>
         <div id="time-${idx}">${story.epTime}</div>
       </td>
