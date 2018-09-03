@@ -16,6 +16,10 @@ const filterDatasource = new JsonNormalize(path.join(dataPath, 'filter.json'));
 app.set('views', path.join(__dirname, './pages'));
 app.set('view engine', 'ejs');
 
+morgan.token('remote-addr', function (req) {
+  return req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+});
+
 app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :remote-addr - :remote-user', {
   stream: logger.stream
 }));
@@ -32,11 +36,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/search/:keyword', (req, res) => {
-  console.log(req.params);
-  console.log(req.params.keyword);
   const keywords = filterDatasource.normalize(req.params.keyword);
   const stories = storyDatasource.search(keywords);
-  logger.info('search: ' + keywords);
+  logger.info('search: ' + keyword);
   return res.render('index', {
     stories,
     rawKeywords: req.params.keyword
