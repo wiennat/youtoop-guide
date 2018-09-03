@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 app.get('/search/:keyword', (req, res) => {
   const keywords = filterDatasource.normalize(req.params.keyword);
   const stories = storyDatasource.search(keywords);
-  logger.info('search: ' + keyword);
+  logger.info('search: ' + keywords);
   return res.render('index', {
     stories,
     rawKeywords: req.params.keyword
