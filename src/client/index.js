@@ -10,10 +10,10 @@ const KEY_ENTER = 13;
 const initStories = global.initStories || [];
 document.addEventListener("DOMContentLoaded", function (event) {
   const searchTxt = document.getElementById("searchTxt");
-  if (initStories != undefined && initStories.length > 0){
+  if (initStories != undefined && initStories.length > 0) {
     const keywordSpan = document.getElementById("keywordSpan");
     const keyword = searchTxt.value;
-    keywordSpan.innerText = `ค้นคำว่า ${keyword} เจอทั้งหมด ${initStories.length} เรื่อง`;
+    showResultText(keywordSpan, keyword, json);
     showResultTable(initStories);
   }
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         .then(json => {
           if (json) {
             const keywordSpan = document.getElementById("keywordSpan");
-            keywordSpan.innerText = `ค้นคำว่า ${keyword} เจอทั้งหมด ${json.length} เรื่อง`;
+            showResultText(keywordSpan, keyword, json);
             showResultTable(json);
           }
         })
@@ -58,6 +58,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
 });
 
+function showResultText(el, keyword, results) {
+  const generatedString = `ค้นคำว่า <a href="/search/${keyword}">${keyword}</a> เจอทั้งหมด ${results.length} เรื่อง`;
+  el.innerHTML = generatedString;
+}
 
 function showResultTable(json) {
   const resultPanel = document.getElementById('resultPanel');
@@ -105,7 +109,7 @@ function generateDescriptionClassname(story) {
 }
 
 function generatePlayerButton(story) {
-  if (story.url.includes('youtube.com/')){
+  if (story.url.includes('youtube.com/')) {
     return `<img id="image" src="/assets/${youtubeLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
   } else {
     return `<img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
