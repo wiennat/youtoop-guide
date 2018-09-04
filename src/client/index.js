@@ -7,9 +7,16 @@ import soundcloudLogo from "./img/soundclound.png";
 import youtubeLogo from "./img/youtube.png";
 
 const KEY_ENTER = 13;
+const initStories = global.initStories || [];
 document.addEventListener("DOMContentLoaded", function (event) {
   const searchTxt = document.getElementById("searchTxt");
-  const keywordSpan = document.getElementById("keywordSpan");
+  if (initStories != undefined && initStories.length > 0){
+    const keywordSpan = document.getElementById("keywordSpan");
+    const keyword = searchTxt.value;
+    keywordSpan.innerText = `ค้นคำว่า ${keyword} เจอทั้งหมด ${initStories.length} เรื่อง`;
+    showResultTable(initStories);
+  }
+
   searchTxt.addEventListener("keypress", (ev) => {
     if (ev.which === KEY_ENTER) {
       const keyword = ev.target.value;
@@ -47,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
           keywordSpan.innerText = `ไม่สามารถค้นข้อมูลได้เนื่องจากปัญหาด้านล่าง`;
           showError(ex);
         })
-
     }
   });
 });

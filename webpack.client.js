@@ -28,7 +28,8 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-      "/api": "http://localhost:3000/"
+      "/api": "http://localhost:3000/",
+      "/search": "http://localhost:3000/"
     }
   }
 };
