@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   if (initStories != undefined && initStories.length > 0) {
     const keywordSpan = document.getElementById("keywordSpan");
     const keyword = searchTxt.value;
-    showResultText(keywordSpan, keyword, json);
+    showResultText(keywordSpan, keyword, initStories);
     showResultTable(initStories);
   }
 
