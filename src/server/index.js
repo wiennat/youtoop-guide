@@ -35,6 +35,14 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/search', (req, res) => {
+  res.redirect('/');
+});
+
+app.get('/search/', (req, res) => {
+  res.redirect('/');
+});
+
 app.get('/search/:keyword', (req, res) => {
   const keywords = filterDatasource.normalize(req.params.keyword);
   const stories = storyDatasource.search(keywords);
