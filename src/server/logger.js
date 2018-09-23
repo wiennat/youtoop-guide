@@ -15,7 +15,7 @@ const options = {
     level: 'debug',
     handleExceptions: true,
     json: false,
-    colorize: true,
+    colorize: false,
   },
 };
 
