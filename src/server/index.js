@@ -20,9 +20,10 @@ const analytics = {
 app.set('views', path.join(__dirname, './pages'));
 app.set('view engine', 'ejs');
 
-morgan.token('remote-addr', function (req) {
+const getRemoteAddress = (req) => {
   return req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-});
+}
+morgan.token('remote-addr', getRemoteAddress);
 
 app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :remote-addr - :remote-user', {
   stream: logger.stream
@@ -31,7 +32,6 @@ app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :re
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
 app.use('/assets', express.static('assets'));
 app.get('/', (req, res) => {
   return res.render('index', {
@@ -50,9 +50,10 @@ app.get('/search/', (req, res) => {
 });
 
 app.get('/search/:keyword', (req, res) => {
+  const tokens = req.params.keyword.trim().split(' ');
   const keywords = filterDatasource.normalize(req.params.keyword);
   const stories = storyDatasource.search(keywords);
-  logger.info('search: ' + keywords);
+  logger.info('search: %s - %s', keywords, getRemoteAddress(req));
   return res.render('index', {
     stories,
     rawKeywords: req.params.keyword,
@@ -66,7 +67,7 @@ app.post('/api/search', (req, res) => {
     return res.send([]);
   }
 
-  logger.info('api search: ' + keyword);
+  logger.info('api search: %s - ', keyword, getRemoteAddress(req));
   const keywords = filterDatasource.normalize(keyword);
   const stories = storyDatasource.search(keywords);
   return res.send(stories);
