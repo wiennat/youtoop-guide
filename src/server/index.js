@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 3000;
 const dataPath = process.env.DATA_PATH || path.join(__dirname, './data');
 const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
 const filterDatasource = new JsonNormalize(path.join(dataPath, 'filter.json'));
+const analytics = {
+    code: process.env.ANALYTICS_CODE,
+    enabled: process.env.ANALYTICS_ENABLED === "true"
+};
 
 app.set('views', path.join(__dirname, './pages'));
 app.set('view engine', 'ejs');
@@ -27,11 +31,13 @@ app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :re
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use('/assets', express.static('assets'));
 app.get('/', (req, res) => {
   return res.render('index', {
     rawKeywords: "",
-    stories: []
+    stories: [],
+    analytics
   });
 });
 
@@ -49,7 +55,8 @@ app.get('/search/:keyword', (req, res) => {
   logger.info('search: ' + keywords);
   return res.render('index', {
     stories,
-    rawKeywords: req.params.keyword
+    rawKeywords: req.params.keyword,
+    analytics
   });
 });
 
