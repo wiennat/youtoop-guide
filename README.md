@@ -28,6 +28,12 @@ npm run fetch:filter -- {sheetId} {key}
 ```
 โดยที่ `{sheetId}` คือไอดีของ Sheet และ `{key}` คือ API Key ที่ได้จากข้อ 1.
 
+## วิธีเพิ่ม Google Analytics
+
+ใช้ Environment variables ด้านล่างนี้เพื่อตั้งค่าของ Google Analytics
+
+* `ANALYTICS_ENABLED` - ตั้งเป็น `true` เพื่อเพิ่มโค้ด Google Analytics  
+* `ANALYTICS_CODE` - กำหนด Tracking ID ของ Google Analytics
 
 ## พบปัญหา
 
