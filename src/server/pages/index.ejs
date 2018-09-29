@@ -57,8 +57,16 @@
     <script type="text/javascript">
     var initStories = <%- JSON.stringify(stories) %>;
 
-      </script>
-      <script src="/assets/client.js"></script>
+    </script>
+    <script src="/assets/client.js"></script>
+    <% if (analytics.enabled) { %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= analytics.code %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= analytics.code %>');
+	</script>
+    <% } %>
     </body>
-
   </html>
