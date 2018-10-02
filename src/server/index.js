@@ -32,7 +32,6 @@ app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :re
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use('/assets', express.static('assets'));
 app.get('/', (req, res) => {
   return res.render('index', {
     rawKeywords: "",
@@ -73,6 +72,7 @@ app.post('/api/search', (req, res) => {
   return res.send(stories);
 });
 
+app.use(express.static('public'));
 
 // error handler
 app.use(function (err, req, res, next) {
