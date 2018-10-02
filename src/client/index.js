@@ -110,9 +110,9 @@ function generateDescriptionClassname(story) {
 
 function generatePlayerButton(story) {
   if (story.url.includes('youtube.com/')) {
-    return `<img id="image" src="/assets/${youtubeLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
+    return `<img id="image" src="${youtubeLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
   } else {
-    return `<img id="image" src="/assets/${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
+    return `<img id="image" src="${soundcloudLogo}" width="32" height="32" alt="ฟังบน Soundcloud">`
   }
 }
 
