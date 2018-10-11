@@ -119,7 +119,7 @@ function generateRow(story, idx) {
         <div id="time-${idx}">${story.epTime}</div>
       </td>
     </tr>`;
-}/
+}
 
 function generateDescriptionClassname(story) {
   return classnames({
