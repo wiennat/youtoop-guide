@@ -72,6 +72,12 @@ app.post('/api/search', (req, res) => {
   return res.send(stories);
 });
 
+app.post('/api/open', (req, res) => {
+  const { ep, url, keyword }  = req.body;
+  const ip = getRemoteAddress(req);
+  logger.info('open: (%s), (%s), (%s), (%s)', ep, keyword, ip, url);
+  return res.send("ok");
+});
 app.use(express.static('public'));
 
 // error handler
