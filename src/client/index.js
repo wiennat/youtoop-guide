@@ -1,5 +1,5 @@
 import "materialize-css/dist/css/materialize.css";
-import "materialize-css/dist/js/materialize.js";
+// import "materialize-css/dist/js/materialize.js";
 import "./main.css";
 import classnames from "classnames";
 import fetch from "isomorphic-fetch";
