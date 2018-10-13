@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const keywordSpan = document.getElementById("keywordSpan");
     const keyword = searchTxt.value;
     showResultText(keywordSpan, keyword, initStories);
-    showResultTable(initStories);
+    showResultTable(initStories, keyword);
   }
 
   searchTxt.addEventListener("keypress", (ev) => {
