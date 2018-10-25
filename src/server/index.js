@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import path from 'path';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import logger from './logger';
 import JsonDataSource from './lib/JsonDataSource';
 import JsonNormalize from './lib/JsonNormalizer';
@@ -32,6 +33,9 @@ app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :re
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(compression());
+
 app.get('/', (req, res) => {
   return res.render('index', {
     rawKeywords: "",
