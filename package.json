@@ -24,6 +24,7 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "classnames": "^2.2.6",
+    "compression": "^1.7.3",
     "ejs": "^2.6.1",
     "eslint": "^4.19.1",
     "express": "^4.16.3",
@@ -45,7 +46,7 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.20.2",
-    "webpack-cli": "^2.1.5",
+    "webpack-cli": "^3.1.1",
     "webpack-dev-server": "^3.1.9",
     "webpack-node-externals": "^1.7.2"
   }

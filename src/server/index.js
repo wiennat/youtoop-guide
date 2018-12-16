@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import path from 'path';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import logger from './logger';
 import JsonDataSource from './lib/JsonDataSource';
 import JsonNormalize from './lib/JsonNormalizer';
@@ -32,6 +33,9 @@ app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :re
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(compression());
+
 app.get('/', (req, res) => {
   return res.render('index', {
     rawKeywords: "",
@@ -72,6 +76,12 @@ app.post('/api/search', (req, res) => {
   return res.send(stories);
 });
 
+app.post('/api/open', (req, res) => {
+  const { ep, url, keyword }  = req.body;
+  const ip = getRemoteAddress(req);
+  logger.info('open: (%s), (%s), (%s), (%s)', ep, keyword, ip, url);
+  return res.send("ok");
+});
 app.use(express.static('public'));
 
 // error handler
