@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.recommended {
+  background: #ffee58;
+}
+
+@media only screen and (max-width: 600px) {
+  nav .brand-logo {
+    font-size: 1.8rem;
+  }
+}
