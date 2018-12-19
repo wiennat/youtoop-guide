@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const keywordSpan = document.getElementById("keywordSpan");
     const keyword = searchTxt.value;
     showResultText(keywordSpan, keyword, initStories);
-    showResultTable(initStories, keyword);
+    showResultTable(initStories);
   }
 
   searchTxt.addEventListener("keypress", (ev) => {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
           if (json) {
             const keywordSpan = document.getElementById("keywordSpan");
             showResultText(keywordSpan, keyword, json);
-            showResultTable(json, keyword);
+            showResultTable(json);
           }
         })
         .catch(ex => {
@@ -63,7 +63,7 @@ function showResultText(el, keyword, results) {
   el.innerHTML = generatedString;
 }
 
-function showResultTable(json, keyword) {
+function showResultTable(json) {
   const resultPanel = document.getElementById('resultPanel');
   const tableHeader = `<tr>
     <th>No.</th>
@@ -80,27 +80,6 @@ function showResultTable(json, keyword) {
     <tbody>${tableRows.join("")}</tbody>
     </table>`;
   resultPanel.innerHTML = generatedString;
-  json.forEach((story, idx) => {
-    document.getElementById(`player-${idx+1}`).onclick = (e) => {
-      const body = {
-        ep: story.name,
-        url: story.url,
-        keyword: keyword
-      };
-
-      fetch('/api/open', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-          },
-          body: Object.keys(body)
-            .map((key) => key + "=" + encodeURIComponent(body[key]))
-            .join("&")
-        })
-        .catch(err => console.error(err));
-      console.log(`open ${story.url}, ${story.name}, ${keyword}`);
-    };
-  });
 }
 
 function generateRow(story, idx) {
@@ -113,7 +92,7 @@ function generateRow(story, idx) {
       <td>${story.narrator}</td>
       <td class="${descriptionClassnames}">${story.description}</td>
       <td class="center">
-        <a href="${story.url}" target="_blank" id="player-${idx+1}">
+        <a href="${story.url}" target="_blank">
           ${playerButton}
         </a>
         <div id="time-${idx}">${story.epTime}</div>
