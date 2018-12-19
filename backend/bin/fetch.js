@@ -12,6 +12,10 @@ if (args.length < 3) {
   exit(1);
 }
 
+function usage(){
+  console.log("npm run fetch:[data|filter] -- SHEET_ID KEY");
+}
+
 const [command, outputFile, sheetId, key, ...rest] = args;
 
 let range, fn;

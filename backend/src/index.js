@@ -34,8 +34,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(compression());
-
 app.get('/', (req, res) => {
   return res.render('index', {
     rawKeywords: "",
@@ -45,10 +43,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-  res.redirect('/');
-});
-
-app.get('/search/', (req, res) => {
   res.redirect('/');
 });
 
@@ -82,6 +76,7 @@ app.post('/api/open', (req, res) => {
   logger.info('open: (%s), (%s), (%s), (%s)', ep, keyword, ip, url);
   return res.send("ok");
 });
+
 app.use(express.static('public'));
 
 // error handler
