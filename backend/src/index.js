@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config()
+
 import express from 'express';
 import chalk from 'chalk';
 import path from 'path';
@@ -5,17 +8,37 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import logger from './logger';
+import knex from 'knex';
 import JsonDataSource from './lib/JsonDataSource';
 import JsonNormalize from './lib/JsonNormalizer';
+import MySqlDataSource from './lib/MySqlDataSource';
+import MySqlNormalizer from './lib/MySqlNormalizer';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const dataPath = process.env.DATA_PATH || path.join(__dirname, './data');
-const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
-const filterDatasource = new JsonNormalize(path.join(dataPath, 'filter.json'));
+const knexClient = knex({
+  client: 'mysql',
+  connection: {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    charset: "utf8mb4"
+  },
+  debug: process.env.DEBUG
+});
+
+// const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
+const storyDatasource = new MySqlDataSource({
+  knex: knexClient
+});
+const filterDatasource = new MySqlNormalizer({
+  knex: knexClient
+});
 const analytics = {
-    code: process.env.ANALYTICS_CODE,
-    enabled: process.env.ANALYTICS_ENABLED === "true"
+  code: process.env.ANALYTICS_CODE,
+  enabled: process.env.ANALYTICS_ENABLED === "true"
 };
 
 app.set('views', path.join(__dirname, './pages'));
@@ -48,14 +71,16 @@ app.get('/search', (req, res) => {
 
 app.get('/search/:keyword', (req, res) => {
   const tokens = req.params.keyword.trim().split(' ');
-  const keywords = filterDatasource.normalize(req.params.keyword);
-  const stories = storyDatasource.search(keywords);
   logger.info('search: %s - %s', keywords, getRemoteAddress(req));
-  return res.render('index', {
-    stories,
-    rawKeywords: req.params.keyword,
-    analytics
-  });
+  filterDatasource.normalize(req.params.keyword)
+    .then((keywords) => {
+      storyDatasource.search(keywords)
+        .then((stories) => res.render('index', {
+          stories,
+          rawKeywords: req.params.keyword,
+          analytics
+        }))
+    });
 });
 
 app.post('/api/search', (req, res) => {
@@ -65,13 +90,19 @@ app.post('/api/search', (req, res) => {
   }
 
   logger.info('api search: %s - ', keyword, getRemoteAddress(req));
-  const keywords = filterDatasource.normalize(keyword);
-  const stories = storyDatasource.search(keywords);
-  return res.send(stories);
+  const f = filterDatasource.normalize(keyword)
+    .then((keywords) => {
+      storyDatasource.search(keywords)
+        .then((stories) => res.send(stories));
+    });
 });
 
 app.post('/api/open', (req, res) => {
-  const { ep, url, keyword }  = req.body;
+  const {
+    ep,
+    url,
+    keyword
+  } = req.body;
   const ip = getRemoteAddress(req);
   logger.info('open: (%s), (%s), (%s), (%s)', ep, keyword, ip, url);
   return res.send("ok");

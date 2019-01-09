@@ -16,7 +16,7 @@ class JsonDataSource {
     }
   }
 
-  search(keyword) {
+  async search(keyword) {
     const stories = this.load();
     const matches = stories.filter((story) => this.isMatch(story, keyword));
     return matches;

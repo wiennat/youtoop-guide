@@ -16,7 +16,7 @@ class JsonNormalizer {
     }
   }
 
-  normalize(word) {
+  async normalize(word) {
     const ngWords = ["คุณ", "ไอ้"];
     const filteredWord = ngWords.reduce((inWord, ngWord) => inWord.replace(ngWord, ""), word);
     if (word === 'ep') {

@@ -63,8 +63,9 @@ fetch(url)
 
 function sheetToDataJson(sheet) {
   const sheetResult = sheet.valueRanges[0].values;
-  return sheetResult.map(row => ({
-      id: genId(row),
+  return sheetResult.map((row, idx) => ({
+      id: genId(row, idx),
+      order: idx,
       name: row[0],
       part: row[1],
       narrator: row[2],
@@ -148,29 +149,29 @@ function prepareTermsQuery(story, kn) {
 
   const kw1map = [...keyword1Set].map(term => ({"story_id": story.id, term }));
   const kw2map = [...keyword2Set].map(term => ({"story_id": story.id, term }));
-  const kw1Queries = kn.insert(kw1map).into('sim_story_terms1').toString();  
+  const kw1Queries = kn.insert(kw1map).into('sim_story_terms1').toString();
   const kw2Queries = kn.insert(kw2map).into('sim_story_terms2').toString();
 
   return [
-      kw1Queries.replace(/^insert/i, 'insert ignore'), 
+      kw1Queries.replace(/^insert/i, 'insert ignore'),
       kw2Queries.replace(/^insert/i, 'insert ignore')
   ];
 }
 
 function writeFilterResults(rows) {
   const kn = getClient();
-  
+
   const termSets = Object.keys(rows).reduce((acc, term) => {
     acc[term] = [...new Set(rows[term])];
     return acc;
-  }, {}); 
+  }, {});
 
   const queries = Object.keys(termSets).map(term => {
     const query = kn.insert(termSets[term].map(t => ({ term, similar_term: t })))
                     .into('sim_terms')
                     .toString()
                     .replace(/^insert/i, 'insert ignore')
-      ; 
+      ;
     return query;
   });
 

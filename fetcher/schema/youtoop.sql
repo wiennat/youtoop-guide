@@ -15,6 +15,8 @@ DROP TABLE IF EXISTS `sim_stories`;
 
 CREATE TABLE `sim_stories` (
   `id` varchar(250) NOT NULL DEFAULT '',
+  `order` int(11) DEFAULT NULL,
+
   `description` text,
   `ep` varchar(250) NOT NULL DEFAULT '',
   `epTime` varchar(250) NOT NULL DEFAULT '',

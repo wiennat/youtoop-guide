@@ -6,8 +6,8 @@
   "author": "wiennat <wiennat@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "fetch:data": "node -r dotenv/config fetch2.js data",
-    "fetch:filter": "node -r dotenv/config fetch2.js filter"
+    "fetch:data": "node -r dotenv/config fetch.js data",
+    "fetch:filter": "node -r dotenv/config fetch.js filter"
   },
   "dependencies": {
     "chalk": "^2.4.2",
