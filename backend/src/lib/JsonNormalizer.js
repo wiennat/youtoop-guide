@@ -16,16 +16,16 @@ class JsonNormalizer {
     }
   }
 
-  normalize(word) {
+  async normalize(word) {
     const ngWords = ["คุณ", "ไอ้"];
     const filteredWord = ngWords.reduce((inWord, ngWord) => inWord.replace(ngWord, ""), word);
     if (word === 'ep') {
-      return [" อีพี "];
+      return ["อีพี"];
     }
 
     const data = this.load();
     const normalizedWords = Object.keys(data).filter((key) => {
-      return data[key].toLowerCase().includes(word.toLowerCase());
+      return data[key].some(term => term.toLowerCase() === word);
     });
     if (normalizedWords.length > 0) {
       return normalizedWords;

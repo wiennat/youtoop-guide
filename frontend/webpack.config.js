@@ -1,3 +1,4 @@
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -5,8 +6,9 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    'client': './src/client/index.js',
+    'client': './src/index.js',
   },
+  mode: "development",
   target: 'web',
   output: {
     filename: '[name].js',
@@ -24,7 +26,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([{
-      from: './src/client/public',
+      from: './public',
       to:  path.resolve(__dirname, 'dist/public')
     }]),
     new MiniCssExtractPlugin({
@@ -33,7 +35,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'src/client/public'),
+    contentBase: path.resolve(__dirname, 'public'),
     proxy: {
       "/api": "http://localhost:3000/",
       "/search": "http://localhost:3000/"

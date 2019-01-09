@@ -12,6 +12,10 @@ if (args.length < 3) {
   exit(1);
 }
 
+function usage(){
+  console.log("npm run fetch:[data|filter] -- SHEET_ID KEY");
+}
+
 const [command, outputFile, sheetId, key, ...rest] = args;
 
 let range, fn;
@@ -53,8 +57,8 @@ function sheetToDataJson(sheet) {
       url: row[4],
       ep: row[5],
       epTime: row[6],
-      keyword1: row[8],
-      keyword2: row[9] || "",
+      keyword1: row[8] ? row[8].split(' ').filter(Boolean) : "",
+      keyword2: row[9] ? row[9].split(' ').filter(Boolean) : "",
     }
   });
 }
@@ -64,7 +68,7 @@ function sheetToFilterJson(sheet) {
   const compacted = sheetResult.filter(row => row.length > 0);
   const resultMap = {};
   compacted.forEach((row) => {
-    resultMap[row[0]] = row[1];
+    resultMap[row[0].trim()] = row[1].split(" ").filter(Boolean);
   });
 
   return resultMap;

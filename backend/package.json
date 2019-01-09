@@ -1,0 +1,41 @@
+{
+  "name": "youtoop-guide",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist --copy-files",
+    "clean": "rimraf dist",
+    "serve": "node dist/index.js",
+    "fetch:data": "node bin/fetch.js data",
+    "fetch:filter": "node bin/fetch.js filter"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "classnames": "^2.2.6",
+    "compression": "^1.7.3",
+    "dotenv": "^6.2.0",
+    "ejs": "^2.6.1",
+    "eslint": "^4.19.1",
+    "express": "^4.16.3",
+    "isomorphic-fetch": "^2.2.1",
+    "knex": "^0.16.3",
+    "materialize-css": "^1.0.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "winston": "^2.4.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "nodemon": "^1.18.4",
+    "rimraf": "^2.6.2"
+  }
+}
