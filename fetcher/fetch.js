@@ -79,11 +79,8 @@ function sheetToDataJson(sheet) {
   }));
 }
 
-function genId(row) {
-  if (row[6] === undefined || row[6].length === 0) {
-    return row[5];
-  }
-  return `${row[5]}-${row[6]}`;
+function genId(row, idx) {
+  return `${row[5]}-${idx}`;
 }
 
 function sheetToFilterJson(sheet) {
