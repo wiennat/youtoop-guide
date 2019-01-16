@@ -71,7 +71,8 @@ app.get('/search', (req, res) => {
 
 app.get('/search/:keyword', (req, res) => {
   const tokens = req.params.keyword.trim().split(' ');
-  logger.info('search: %s - %s', keywords, getRemoteAddress(req));
+  const keyword = req.params.keyword;  
+  logger.info('search: %s - %s', keyword, getRemoteAddress(req));
   filterDatasource.normalize(req.params.keyword)
     .then((keywords) => {
       storyDatasource.search(keywords)
