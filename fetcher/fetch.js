@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 const fetch = require('isomorphic-fetch');
 const chalk = require('chalk');
 const fs = require('fs');

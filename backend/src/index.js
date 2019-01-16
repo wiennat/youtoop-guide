@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config()
 
+import '@babel/polyfill';
 import express from 'express';
 import chalk from 'chalk';
 import path from 'path';
