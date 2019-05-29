@@ -1,0 +1,31 @@
+version: "3"
+services:
+    backend:
+        image: wiennat/youtoop-guide-backend
+        ports:
+            - "3000"
+        networks:
+            youtoop:
+                aliases:
+                    - backend
+        environment:
+            - PORT=3000
+            - DB_HOST=${DB_HOST}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_NAME=${DB_NAME}
+            - ANALYTICS_ENABLED=${ANALYTICS_ENABLED}
+            - ANALYTICS_CODE=${ANALYTICS_CODE}
+
+    frontend:
+        image: wiennat/youtoop-guide-frontend
+        depends_on:
+          - backend
+        ports:
+            - "80:80"
+        networks:
+            youtoop:
+                aliases:
+                    - frontend
+networks:
+    youtoop:
