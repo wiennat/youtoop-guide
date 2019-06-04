@@ -65,3 +65,6 @@ typings/
 
 # build resources
 dist
+
+# db/data
+db/data

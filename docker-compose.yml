@@ -1,23 +1,48 @@
 version: "3"
 services:
-    backend:
-        build: ./backend
-        ports:
-            - "3000"
-        networks:
-            youtoop:
-                aliases:
-                    - backend
-        environment:
-            - PORT=3000
-            - DATA_PATH=${DATA_PATH}
-    frontend:
-        build: ./frontend
-        ports:
-            - "80:80"
-        networks:
-            youtoop:
-                aliases:
-                    - frontend
+  db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=youtoop_simpledb
+    volumes:
+      - "./db/data/:/var/lib/mysql"
+      - "./db/init/:/docker-entrypoint-initdb.d"
+
+    networks:
+      youtoop:
+        aliases:
+          - db
+  backend:
+    depends_on:
+      - db
+    build: ./backend
+    ports:
+      - "3000"
+    networks:
+      youtoop:
+        aliases:
+          - backend
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=youtoop_simpledb
+      - ANALYTICS_ENABLED=true
+      - ANALYTICS_CODE=${ANALYTICS_CODE}
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      youtoop:
+        aliases:
+          - frontend
 networks:
-    youtoop:
+  youtoop:
