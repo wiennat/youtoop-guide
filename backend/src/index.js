@@ -16,6 +16,10 @@ import MySqlDataSource from "./lib/MySqlDataSource";
 import MySqlNormalizer from "./lib/MySqlNormalizer";
 
 const app = express();
+
+// remove x-powered-by
+app.disable('x-powered-by');
+
 const PORT = process.env.PORT || 3000;
 const dataPath = process.env.DATA_PATH || path.join(__dirname, "./data");
 logger.debug("initializing db with following settings");
