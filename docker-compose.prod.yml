@@ -1,7 +1,7 @@
 version: "3"
 services:
   backend:
-    image: wiennat/youtoop-guide-backend
+    image: wiennat/youtoop-guide
     ports:
       - "3000"
     networks:
@@ -22,7 +22,7 @@ services:
     depends_on:
       - backend
     ports:
-      - "80:80"
+      - "80"
     networks:
       youtoop:
         aliases:
