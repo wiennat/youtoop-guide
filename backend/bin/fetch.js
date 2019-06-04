@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 const fetch = require('isomorphic-fetch');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -12,7 +11,7 @@ const args = process.argv.slice(2);
 if (args.length < 3) {
   console.error('not enough arguments');
   usage();
-  exit(1);
+  process.exit(1);
 }
 
 function usage(){
@@ -35,7 +34,7 @@ switch (command) {
     break;
   default:
     console.error(chalk.red('unknown command'));
-    exit(1);
+    process.exit(1);
 }
 
 console.log('loading sheets');

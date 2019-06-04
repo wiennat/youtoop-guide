@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js",
-    "build": "babel src --out-dir dist --copy-files",
+    "build": "babel src --out-dir dist --copy-files && babel bin --out-dir dist/bin --copy-files",
     "clean": "rimraf dist",
     "serve": "node dist/index.js",
     "fetch:data": "node bin/fetch.js data",
@@ -30,11 +30,11 @@
     "winston": "^2.4.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.2.0",
-    "nodemon": "^1.18.4",
-    "rimraf": "^2.6.2"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "nodemon": "^1.19.1",
+    "rimraf": "^2.6.3"
   }
 }
