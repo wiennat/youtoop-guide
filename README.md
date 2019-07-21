@@ -10,16 +10,16 @@
 2. พิมพ์ข้อความที่จะค้นหาในช่องค้นหา
 3. กด Enter แล้วรอแป๊บนึง
 
-
 ## วิธีการดาวน์โหลดข้อมูลใน Google Sheets
 
 1. ออก API Key สำหรับ Sheets API จาก [Google Developer Console](https://console.developers.google.com/apis/credentials)
-2. สร้างไดเรคทอรี ./dist/data สำหรับเก็บข้อมูลของ Sheet ด้วยคำสั่ง
+2. สร้างไดเรคทอรี ./backend/data สำหรับเก็บข้อมูลของ Sheet ด้วยคำสั่ง
 ```bash
-mkdir -p ./dist/data
+mkdir -p ./backend/data
 ```
-3. ใช้คำสั่ง `npm run fetch:data` สำหรับดึงข้อมูลของเรื่องและ `npm run fetch:filter` สำหรับดึงข้อมูลคำสำคัญดังนี้
+3. ใช้คำสั่ง `npm run fetch:data` ที่ `./backend` เพื่ิอดึงข้อมูลของเรื่องและ `npm run fetch:filter` สำหรับดึงข้อมูลคำสำคัญดังนี้
 ```bash
+cd ./backend
 npm run fetch:data -- {sheetId} {key}
 ```
 และ
@@ -28,11 +28,17 @@ npm run fetch:filter -- {sheetId} {key}
 ```
 โดยที่ `{sheetId}` คือไอดีของ Sheet และ `{key}` คือ API Key ที่ได้จากข้อ 1.
 
+## วิธี Build และ Deploy
+สำหรับการ Build มีสองวิธีคือใช้ `docker-compose` หรือ ันด้วย Node โดยตรง
+
+1. ใช้ **docker-compose** - หลังจากดาวโหลดข้อมูลจาก Google Sheets มาแล้้วสามารถสั่ง `docker-compose build` และ `docker-compose up` ได้เลย
+2. **รันจาก NodeJS** - จะต้องรันทั้ง backend และ frontend โดยใช้ `npm run serve` จากใน `./backend` และ `./frontend`
+
 ## วิธีเพิ่ม Google Analytics
 
 ใช้ Environment variables ด้านล่างนี้เพื่อตั้งค่าของ Google Analytics
 
-* `ANALYTICS_ENABLED` - ตั้งเป็น `true` เพื่อเพิ่มโค้ด Google Analytics  
+* `ANALYTICS_ENABLED` - ตั้งเป็น `true` เพื่อเพิ่มโค้ด Google Analytics
 * `ANALYTICS_CODE` - กำหนด Tracking ID ของ Google Analytics
 
 ## พบปัญหา

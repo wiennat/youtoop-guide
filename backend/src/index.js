@@ -11,10 +11,7 @@ import compression from "compression";
 import logger from "./logger";
 import knex from "knex";
 import JsonDataSource from "./lib/JsonDataSource";
-import JsonNormalize from "./lib/JsonNormalizer";
-import MySqlDataSource from "./lib/MySqlDataSource";
-import MySqlNormalizer from "./lib/MySqlNormalizer";
-
+import JsonNormalizer from "./lib/JsonNormalizer";
 const app = express();
 
 // remove x-powered-by
@@ -22,46 +19,10 @@ app.disable('x-powered-by');
 
 const PORT = process.env.PORT || 3000;
 const dataPath = process.env.DATA_PATH || path.join(__dirname, "./data");
-logger.debug("initializing db with following settings");
-logger.debug(`host: ${process.env.DB_HOST}`);
-logger.debug(`user: ${process.env.DB_USER}`);
-logger.debug(`password: ***`);
-logger.debug(`database: ${process.env.DB_NAME}`);
-const knexClient = knex({
-  client: "mysql",
-  connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    charset: "utf8mb4"
-  },
-  pool: {
-    afterCreate: (conn, done) => {
-      // make a test query to ensure connection
-      logger.info("connection created");
-      done(null, conn);
-    }
-  },
-  debug: process.env.DEBUG
-});
-
-knexClient
-  .raw("SELECT 1+1;")
-  .then(() => {
-    logger.info("db inited");
-  })
-  .catch(err => {
-    logger.error("cannot make connection", err);
-  });
-
-// const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
-const storyDatasource = new MySqlDataSource({
-  knex: knexClient
-});
-const filterDatasource = new MySqlNormalizer({
-  knex: knexClient
-});
+logger.debug("starting youtoop backend");
+logger.debug(`data: ${dataPath}`);
+const storyDatasource = new JsonDataSource(path.join(dataPath, 'data.json'));
+const filterDatasource = new JsonNormalizer(path.join(dataPath, 'filter.json'));
 const analytics = {
   code: process.env.ANALYTICS_CODE,
   enabled: process.env.ANALYTICS_ENABLED === "true"

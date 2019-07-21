@@ -68,3 +68,5 @@ dist
 
 # db/data
 db/data
+
+*.code-workspace
